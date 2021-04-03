@@ -2,9 +2,6 @@
 .idea/
 README
 *.iml
-*.xml
 target/
 out/
 test/
-resources/
-Test.java
