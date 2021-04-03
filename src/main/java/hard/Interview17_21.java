@@ -4,7 +4,7 @@ package hard;
  * @author zhangjun
  * @date 2021/4/2
  */
-public class Interview17_21 {
+public class Interview17_21{
     public int trap(int[] height) {
         int result = 0;
         int right = height.length - 1;
