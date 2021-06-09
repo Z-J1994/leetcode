@@ -8,13 +8,12 @@ public class Solution1725 {
     public int countGoodRectangles(int[][] rectangles) {
         int count = 0;
         int maxLen = 0;
-        for(int r[] : rectangles){
-            int min = Math.min(r[0],r[1]);
-            if(min > maxLen){
+        for (int[] r : rectangles) {
+            int min = Math.min(r[0], r[1]);
+            if (min > maxLen) {
                 count = 1;
                 maxLen = min;
-            }
-            else if(min == maxLen){
+            } else if (min == maxLen) {
                 ++count;
             }
         }
