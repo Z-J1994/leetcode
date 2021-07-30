@@ -5,11 +5,13 @@ package easy;
  * @version 2020/10/02  19:08
  */
 public class Solution171 {
-    public int titleToNumber(String s) {
+    public int titleToNumber(String columnTitle) {
         int sum = 0;
-        for(int i = s.length() - 1,j = 1;i >= 0;i--,j *= 26){
-            char c = s.charAt(i);
-            sum += (c - 64) * j;
+        int factor = 1;
+        for(int i = columnTitle.length() - 1;i >= 0;i--){
+            int t = columnTitle.charAt(i) - 64;
+            sum += t * factor;
+            factor *= 26;
         }
         return sum;
     }
