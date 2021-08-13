@@ -4,7 +4,7 @@ package hard;
  * @author zhangjun
  * @version 2021/8/13
  */
-public class Solution223 {
+public class Solution233 {
     public int countDigitOne(int n) {
         int count = 0;
         while(n > 0){
