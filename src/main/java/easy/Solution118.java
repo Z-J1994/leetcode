@@ -28,5 +28,6 @@ public class Solution118 {
             result.add(level);
         }
         return result;
+
     }
 }
