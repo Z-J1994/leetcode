@@ -9,6 +9,6 @@ public class Solution575 {
             map[candyType[i] + 100000] = 1;
         }
         int half = candyType.length / 2;
-        return half >= typeCount ? typeCount : half;
+        return Math.min(half, typeCount);
     }
 }
