@@ -35,7 +35,6 @@ public class Solution851 {
             if (quiet[result] < quiet[min]) {
                 min = result;
             }
-
         }
         answer[x] = min;
         return min;
