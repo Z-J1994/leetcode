@@ -9,11 +9,11 @@ public class Solution2006 {
         int [] map = new int[101];
         int count = 0;
         for(int i = nums.length - 1,t;i >= 0;i--){
-            if(nums[i] > k && (t = map[nums[i] - k]) > 0){
-                count += t;
+            if(nums[i] > k){
+                count += map[nums[i] - k];
             }
-            if(nums[i] + k <= 100 && (t = map[nums[i] + k]) > 0){
-                count += t;
+            if(nums[i] + k <= 100){
+                count += map[nums[i] + k];
             }
             map[nums[i]]++;
         }
