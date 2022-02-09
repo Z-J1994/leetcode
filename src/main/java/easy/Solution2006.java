@@ -8,7 +8,7 @@ public class Solution2006 {
     public int countKDifference(int[] nums, int k) {
         int [] map = new int[101];
         int count = 0;
-        for(int i = nums.length - 1,t;i >= 0;i--){
+        for(int i = nums.length - 1;i >= 0;i--){
             if(nums[i] > k){
                 count += map[nums[i] - k];
             }
