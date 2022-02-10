@@ -8,16 +8,17 @@ import list.ListNode;
  */
 public class Solution82 {
     public ListNode deleteDuplicates(ListNode head) {
-        head = new ListNode(-101,head);
+        head = new ListNode(-101, head);
         ListNode current = head;
-        while(current.next != null){
+        while (current.next != null) {
             ListNode n = current.next.next;
-            while(n != null && current.next.val == n.val){
+            int value = current.next.val;
+            while (n != null && value == n.val) {
                 n = n.next;
             }
-            if(current.next.next != n){
+            if (current.next.next != n) {
                 current.next = n;
-            }else{
+            } else {
                 current = current.next;
             }
         }
