@@ -1,57 +1,72 @@
 package medium;
 
-import java.util.Arrays;
-
 public class Solution6 {
+//    public String convert(String s, int numRows) {
+//        int length = s.length();
+//        if (length <= numRows || numRows == 1) {
+//            return s;
+//        }
+//        char[] values = new char[length];
+//        char[] str = s.toCharArray();
+//        int index = 0;
+//        int step = (numRows - 1) * 2;
+//
+//        for (int j = 0; j < length; j += step) {
+//            values[index++] = str[j];
+//        }
+//
+//        int l = step;
+//        for (int i = 1; i < numRows - 1; i++) {
+//            l -= 2;
+//            for (int j = i; j < length; j += step) {
+//                values[index++] = str[j];
+//                if (j + l < length) {
+//                    values[index++] = str[j + l];
+//                }
+//            }
+//        }
+//
+//        for (int j = numRows - 1; j < length; j += step) {
+//            values[index++] = str[j];
+//        }
+//        return new String(values);
+//    }
+
     public String convert(String s, int numRows) {
         int length = s.length();
-        if(length <= numRows || numRows == 1){
+        if (numRows == 1 || numRows > length) {
             return s;
         }
-        char [] values = new char[length];
-        char [] str = s.toCharArray();
+        char[] chars = new char[s.length()];
         int index = 0;
         int step = (numRows - 1) * 2;
-
-        for(int j = 0;j < length;j += step){
-            values[index++] = str[j];
+        for (int i = 0;i < length; i += step) {
+            chars[index++] = s.charAt(i);
         }
-
-        int l = step;
-        for(int i = 1;i < numRows - 1;i++){
-            l -= 2;
-            for(int j = i;j < length;j += step){
-                values[index++] = str[j];
-                if(j + l < length){
-                    values[index++] = str[j + l];
+        for (int j = 1, d = step,t = 0; j < numRows - 1; j++) {
+            d -= 2;
+            t += 2;
+            for (int i = j, c = 0; i < length; c++) {
+                chars[index++] = s.charAt(i);
+                if((c & 1) == 0){
+                    i += d;
+                }else{
+                    i += t;
                 }
             }
         }
-
-        for(int j = numRows - 1;j < length;j += step){
-            values[index++] = str[j];
+        for (int i = numRows - 1;i < length; i += step) {
+            chars[index++] = s.charAt(i);
         }
-
-        System.out.println(Arrays.toString(values));
-        return new String(values);
+        return new String(chars);
     }
 
     public static void main(String[] args) {
         Solution6 s = new Solution6();
-
-        String str1 = "LEETCODEISHIRING";
-        int num1 = 3;
-
-        String str2 = "LEETCODEISHIRING";
-        int num2 = 4;
-
-        String str3 = "AB";
-        int num3 = 1;
-
-        System.out.println(s.convert(str1,num1).equals("LCIRETOESIIGEDHN"));
-
-        System.out.println(s.convert(str2,num2).equals("LDREOEIIECIHNTSG"));
-        System.out.println(s.convert(str3,num3).equals("LDREOEIIECIHNTSG"));
+        System.out.println(s.convert("PAYPALISHIRING", 3).equals("PAHNAPLSIIGYIR"));
+        System.out.println(s.convert("LEETCODEISHIRING", 3).equals("LCIRETOESIIGEDHN"));
+        System.out.println(s.convert("LEETCODEISHIRING", 4).equals("LDREOEIIECIHNTSG"));
+        System.out.println(s.convert("AB", 1).equals("AB"));
 
     }
 }
