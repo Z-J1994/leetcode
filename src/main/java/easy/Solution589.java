@@ -8,7 +8,7 @@ import java.util.List;
  * @version 2020/09/24  23:27
  */
 public class Solution589 {
-    class Node {
+    private static class Node {
         public int val;
         public List<Node> children;
 
