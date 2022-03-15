@@ -24,20 +24,17 @@ public class Solution590 {
             children = _children;
         }
     }
-    List<Integer> list = new ArrayList<>();
     public List<Integer> postorder(Node root) {
-        recursion(root);
-        return list;
+        dfs(root);
+        return result;
     }
-
-    private void recursion(Node root){
+    private final List<Integer> result = new ArrayList<>();
+    private void  dfs(Node root){
         if(root != null){
-            if(root.children != null){
-                for(Node node : root.children){
-                    recursion(node);
-                }
+            for(Node c : root.children){
+                dfs(c);
             }
-            list.add(root.val);
+            result.add(root.val);
         }
     }
 }
