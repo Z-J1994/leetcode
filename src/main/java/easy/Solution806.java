@@ -8,14 +8,15 @@ public class Solution806 {
     public int[] numberOfLines(int[] widths, String s) {
         int rowCount = 1;
         int mod = 0;
-        for(int i = 0,l = s.length(),t;i < l;i++){
+        for (int i = 0, l = s.length(), t; i < l; i++) {
             t = widths[s.charAt(i) - 97];
-            if(mod + t >100){
+            if (mod + t > 100) {
                 rowCount++;
                 mod = t;
-            }else{
+            } else {
                 mod += t;
             }
         }
-        return new int[]{rowCount,mod};
+        return new int[]{rowCount, mod};
+    }
 }
