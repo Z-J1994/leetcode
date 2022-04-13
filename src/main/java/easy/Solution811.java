@@ -25,13 +25,11 @@ public class Solution811 {
             j++;
             root = put(root,new String(chars,j,chars.length - j),value);
 
-            StringBuilder key = new StringBuilder();
-
             for(int t = chars.length - 1;t >= j;t--){
                 if(chars[t] == '.'){
                     root = put(root,new String(chars,t + 1,chars.length - (t + 1)),value);
                 }
-                key.append(chars[t]);
+
             }
         }
 
@@ -41,7 +39,7 @@ public class Solution811 {
 
 
 
-    private class Node{
+    private static class Node{
         String key;
         int value;
         Node left;
@@ -104,7 +102,7 @@ public class Solution811 {
 
     private Node put(Node x,String key,int value){
         if(x == null){
-            return new Node(key, value,0);
+            return new Node(key, value, 0);
         }
         int cmp = key.compareTo(x.key);
         if(cmp < 0){
