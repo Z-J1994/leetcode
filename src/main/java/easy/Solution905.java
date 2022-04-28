@@ -6,18 +6,17 @@ package easy;
  */
 public class Solution905 {
 
-    public int[] sortArrayByParity(int[] A) {
-        int i = 0, j = A.length - 1;
-        while (i < j) {
-            if ((A[i] & 0x1) > (A[j] & 0x1)) {
-                int tmp = A[i];
-                A[i] = A[j];
-                A[j] = tmp;
+    public int[] sortArrayByParity(int[] nums) {
+        for(int i = -1,j = nums.length,t;;){
+            while(++i < j && (nums[i] & 1) == 0);
+            while(--j > i && (nums[j] & 1) == 1);
+            if(i >= j){
+                break;
             }
-
-            if ((A[i] & 0x1) == 0) i++;
-            if ((A[j] & 0x1) == 1) j--;
+            t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
         }
-        return A;
+        return nums;
     }
 }
