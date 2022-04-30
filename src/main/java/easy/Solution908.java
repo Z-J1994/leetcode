@@ -5,33 +5,21 @@ package easy;
  * @version 2020/10/01  15:17
  */
 public class Solution908 {
-    public int smallestRangeI(int[] A, int K) {
-        int min = 0;
-        int max = 0;
-        for(int i = 0;i < A.length;i++){
-            if(A[i] > A[max]){
-                max = i;
+    public int smallestRangeI(int[] nums, int k) {
+        int max = nums[0];
+        int min = nums[0];
+        for(int i = 1;i < nums.length;i++){
+            if(max < nums[i]){
+                max = nums[i];
             }
-            if(A[i] < A[min]){
-                min = i;
+            if(min > nums[i]){
+                min = nums[i];
             }
         }
-        int t = A[max] - A[min];
-        return t < 2 * K ? 0 : t - 2*K;
+        int result = max - min - 2 * k;
+        if(result < 0){
+            result = 0;
+        }
+        return result;
     }
-
-//    public int smallestRangeI(int[] A, int K) {
-//        int min = 10000;
-//        int max = 0;
-//        for(int i = 0;i < A.length;i++){
-//            if(A[i] > max){
-//                max = A[i];
-//            }
-//            if(A[i] < min){
-//                min = A[i];
-//            }
-//        }
-//        int t = max - min;
-//        return t < 2 * K ? 0 : t - 2*K;
-//    }
 }
