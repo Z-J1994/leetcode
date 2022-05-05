@@ -22,12 +22,4 @@ public class Solution713 {
         count += right - left;
         return count;
     }
-
-    public static void main(String[] args) {
-        Solution713 s = new Solution713();
-        System.out.println(s.numSubarrayProductLessThanK(new int[]{10, 5, 2, 6}, 100));
-        System.out.println(s.numSubarrayProductLessThanK(new int[]{10, 5,1000, 2, 6}, 100));
-        System.out.println(s.numSubarrayProductLessThanK(new int[]{10, 5,1008, 2,1234, 6}, 100));
-        System.out.println(s.numSubarrayProductLessThanK(new int[]{10,9,10,4,3,8,3,3,6,2,10,10,9,3}, 19) == 18);
-    }
 }
