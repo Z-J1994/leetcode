@@ -22,11 +22,7 @@ public class Solution933 {
             }
             element[tail] = t;
             tail = (tail + 1) % 3002;
-            if(tail > head){
-                return tail - head;
-            }
-            return 3002 - head + tail;
+            return (3002 - head + tail) % 3002;
         }
-
     }
 }
