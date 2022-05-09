@@ -1,29 +1,28 @@
 package easy;
 
-import java.util.LinkedList;
-
 /**
  * @author zhangjun
  * @version 2020/09/27  19:29
  */
 public class Solution933 {
+    private static class RecentCounter {
 
-        LinkedList<Integer> list;
-        int count;
-        public void RecentCounter() {
-            list = new LinkedList<>();
-            count = 0;
+        private final int[] element;
+        private int head;
+        private int tail;
+
+        public RecentCounter() {
+            element = new int[3002];
         }
 
         public int ping(int t) {
-
-            while(!list.isEmpty() && t - list.getFirst() > 3000){
-                list.removeFirst();
-                count--;
+            int f = t - 3000;
+            while (head != tail && element[head] < f) {
+                head = (head + 1) % 3002;
             }
-            list.add(t);
-            count++;
-            return count;
+            element[tail] = t;
+            tail = (tail + 1) % 3002;
+            return (3002 - head + tail) % 3002;
         }
-
+    }
 }
