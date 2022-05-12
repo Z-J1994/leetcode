@@ -7,13 +7,16 @@ package easy;
 public class Solution944 {
     public int minDeletionSize(String[] A) {
         int count = 0;
-        for(int index = 0;index < A[0].length();index++){
-            char c = 'a';
+        int length = A[0].length();
+        for(int index = 0;index < length;index++){
+            char p = A[0].charAt(index);
+            char c;
             for(int i = 1;i < A.length;i++){
-                if(A[i].charAt(index) < A[i - 1].charAt(index)){
+                if((c = A[i].charAt(index)) < p){
                     count++;
                     break;
                 }
+                p = c;
             }
         }
         return count;
