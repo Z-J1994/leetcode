@@ -92,6 +92,6 @@ public class Solution436 {
 
     public static void main(String[] args) {
         Solution436 s = new Solution436();
-        System.out.println(Arrays.toString(s.findRightInterval(Parser.stringToIntMatrix("[[1,4],[2,3],[3,4]]"))));
+        System.out.println(Arrays.toString(s.findRightInterval(Parser.stringToIntMatrix("[[1,4],[2,3],[3,4]]",2))));
     }
 }
