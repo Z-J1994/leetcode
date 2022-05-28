@@ -7,27 +7,17 @@ import tree.TreeNode;
  * @version 2020/10/02  19:54
  */
 public class Solution965 {
-    private boolean marked = true;
     public boolean isUnivalTree(TreeNode root) {
-        preOrder(root);
-        return marked;
-    }
-    private void preOrder(TreeNode root){
-        if(root != null){
-            if(root.left != null){
-                if(root.val != root.left.val){
-                    marked = false;
-                    return;
-                }
+        if(root.left != null){
+            if(root.left.val != root.val || !isUnivalTree(root.left)){
+                return false;
             }
-            if(root.right != null){
-                if(root.val != root.right.val){
-                    marked = false;
-                    return;
-                }
-            }
-            preOrder(root.left);
-            preOrder(root.right);
         }
+        if(root.right != null){
+            if(root.right.val != root.val || !isUnivalTree(root.right)){
+                return false;
+            }
+        }
+        return true;
     }
 }
