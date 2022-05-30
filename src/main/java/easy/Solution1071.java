@@ -8,15 +8,6 @@ public class Solution1071 {
     public String gcdOfStrings(String str1, String str2) {
         int l1 = str1.length();
         int l2 = str2.length();
-        if (l1 > l2) {
-            int t = l1;
-            l1 = l2;
-            l2 = t;
-
-            String s = str1;
-            str1 = str2;
-            str2 = s;
-        }
         char[] chars1 = str1.toCharArray();
         char[] chars2 = str2.toCharArray();
         int gcd = gcd(l1, l2);
