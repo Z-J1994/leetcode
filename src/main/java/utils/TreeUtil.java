@@ -1,4 +1,6 @@
-package tree;
+package utils;
+
+import tree.TreeNode;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

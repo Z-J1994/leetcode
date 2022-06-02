@@ -1,7 +1,7 @@
 package medium;
 
 import tree.TreeNode;
-import tree.TreeUtil;
+import utils.TreeUtil;
 
 import java.util.NoSuchElementException;
 

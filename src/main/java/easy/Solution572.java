@@ -2,7 +2,7 @@ package easy;
 
 import tree.TreeNode;
 
-import static tree.TreeUtil.from;
+import static utils.TreeUtil.from;
 
 public class Solution572 {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
