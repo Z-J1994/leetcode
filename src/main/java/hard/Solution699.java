@@ -46,6 +46,6 @@ public class Solution699 {
 
     public static void main(String[] args) {
         Solution699 s = new Solution699();
-        System.out.println(s.fallingSquares(Parser.stringToIntMatrix("[[1,2],[2,3],[6,1]]", 2)));
+        System.out.println(s.fallingSquares(Parser.stringToIntMatrix("[[1,2],[2,3],[6,1]]",3, 2)));
     }
 }

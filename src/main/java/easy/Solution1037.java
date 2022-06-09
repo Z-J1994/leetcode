@@ -14,6 +14,6 @@ public class Solution1037 {
 
     public static void main(String[] args) {
         Solution1037 s = new Solution1037();
-        System.out.println(s.isBoomerang(Parser.stringToIntMatrix("[[73,31],[73,19],[73,45]]", 2)));
+        System.out.println(s.isBoomerang(Parser.stringToIntMatrix("[[73,31],[73,19],[73,45]]", 3,2)));
     }
 }
