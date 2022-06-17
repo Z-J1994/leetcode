@@ -21,4 +21,3 @@ public class Solution1184 {
         return Math.min(min, d);
     }
 }
-}
