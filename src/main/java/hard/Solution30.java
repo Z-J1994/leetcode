@@ -80,12 +80,4 @@ public class Solution30 {
         return n;
     }
 
-    public static void main(String[] args) {
-        Solution30 s = new Solution30();
-//        System.out.println(s.findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));
-//        System.out.println(s.findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","word"}));
-//        System.out.println(s.findSubstring("barfoofoobarthefoobarman", new String[]{"bar","foo","the"}));
-//        System.out.println(s.findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));
-        System.out.println(s.findSubstring("mississippi", new String[]{"is"}));
-    }
 }
