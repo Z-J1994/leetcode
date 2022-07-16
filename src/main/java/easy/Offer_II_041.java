@@ -16,7 +16,7 @@ public class Offer_II_041 {
             int i = index++ % data.length;
             sum = sum - data[i] + val;
             data[i] = val;
-            return (double)sum / ((index > data.length) ? data.length : index);
+            return (double)sum / (Math.min(index, data.length));
         }
     }
 }
