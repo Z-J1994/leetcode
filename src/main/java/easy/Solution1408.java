@@ -11,12 +11,10 @@ import java.util.List;
  */
 public class Solution1408 {
     public List<String> stringMatching(String[] words) {
-        Arrays.sort(words, Comparator.comparingInt(String::length));
         List<String> result = new ArrayList<>(words.length);
-        for(int i = 0;i < words.length;i++){
-            String d = words[i];
-            for(int j = i + 1;j < words.length;j++){
-                if(d.length() < words[j].length() && words[j].contains(d)){
+        for (String d : words) {
+            for (String word : words) {
+                if (d.length() < word.length() && word.contains(d)) {
                     result.add(d);
                     break;
                 }
