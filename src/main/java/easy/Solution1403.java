@@ -16,11 +16,11 @@ public class Solution1403 {
             sum += nums[i];
         }
         sum >>>= 1;
-        List<Integer> ressult = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         for(int i = nums.length - 1, t = 0;i >= 0 && t <= sum;i--){
             t += nums[i];
-            ressult.add(nums[i]);
+            result.add(nums[i]);
         }
-        return ressult;
+        return result;
     }
 }
