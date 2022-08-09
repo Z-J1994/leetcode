@@ -7,15 +7,12 @@ package easy;
 public class Solution1413 {
     public int minStartValue(int[] nums) {
         int s = 0;
-        int min = 0x7fffffff;
+        int min = 0;
         for(int i : nums){
             s += i;
             if(s < min){
                 min = s;
             }
-        }
-        if(min > 0){
-            return 1;
         }
         return 1 - min;
     }
