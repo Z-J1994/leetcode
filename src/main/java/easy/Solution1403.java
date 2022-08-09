@@ -10,47 +10,17 @@ import java.util.List;
  */
 public class Solution1403 {
     public List<Integer> minSubsequence(int[] nums) {
-        int length = nums.length;
-        quickSort(nums,0,length - 1);
-        List<Integer> list = new ArrayList<>();
+        Arrays.sort(nums);
         int sum = 0;
-        for(int i = length - 1;i >= 0;i--){
+        for(int i = 0; i < nums.length;i++){
             sum += nums[i];
         }
-        int t = 0;
-        for(int i = length - 1;i >= 0;i--){
+        sum >>>= 1;
+        List<Integer> result = new ArrayList<>();
+        for(int i = nums.length - 1, t = 0;i >= 0 && t <= sum;i--){
             t += nums[i];
-            list.add(nums[i]);
-            if((t << 1) > sum){
-                return list;
-            }
+            result.add(nums[i]);
         }
-
-        return null;
-    }
-
-    private void quickSort(int [] nums,int lo,int hi){
-        if(lo < hi){
-            int p = partition(nums,lo,hi);
-            quickSort(nums, lo, p - 1);
-            quickSort(nums, p + 1, hi);
-        }
-    }
-
-    private int partition(int [] nums,int lo,int hi){
-        int p = nums[hi];
-        int i = lo - 1;
-        int j = hi;
-        while(i < j){
-            while(nums[++i] < p);
-            while(i < j && nums[--j] > p);
-            int t = nums[i];
-            nums[i] = nums[j];
-            nums[j] = t;
-        }
-        int t = nums[hi];
-        nums[hi] = nums[i];
-        nums[i] = t;
-        return i;
+        return result;
     }
 }
