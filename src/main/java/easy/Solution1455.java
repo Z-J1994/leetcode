@@ -6,49 +6,21 @@ package easy;
  */
 public class Solution1455 {
     public int isPrefixOfWord(String sentence, String searchWord) {
-        int [] next = KMP(searchWord);
-        int count = 1;
-        int k = 0;
-        boolean mark = true;
-        for(int i = 0;i < sentence.length();i++){
-            char c = sentence.charAt(i);
-            if(c == ' '){
-                mark = true;
-                count++;
-                continue;
+        for (int i = 0, k = searchWord.length(), l = sentence.length() - k, j = 0, index = 1; i <= l; j = 0, index++) {
+            for (; j < k && sentence.charAt(i) == searchWord.charAt(j); i++, j++);
+            if (j == k) {
+                return index;
             }
-            while(k > 0 && searchWord.charAt(k) != c){
-                k = next[k];
-            }
-            if(searchWord.charAt(k) != c){
-                mark = false;
-            }
-            if (!mark){
-                continue;
-            }
-            if(searchWord.charAt(k) == c){
-                k++;
-            }
-            if(k == searchWord.length()){
-                return count;
-            }
+            while (i <= l && sentence.charAt(i++) != ' ');
         }
         return -1;
     }
 
-    private int[] KMP(String pattern){
-        int [] next = new int[pattern.length()];
-        next[0] = 0;
-        for(int i = 1,k = 0;i < next.length;i++){
-            while(k > 0 && pattern.charAt(i) != pattern.charAt(k)){
-                k = next[k];
-            }
-            if(pattern.charAt(i) == pattern.charAt(k)){
-                next[i] = k++;
-            }else{
-                next[i] = k;
-            }
-        }
-        return next;
+
+    public static void main(String[] args) {
+        Solution1455 s = new Solution1455();
+        System.out.println(s.isPrefixOfWord("i love eating burger", "burg") == 4);
+        System.out.println(s.isPrefixOfWord("this problem is an easy problem", "pro") == 2);
+        System.out.println(s.isPrefixOfWord("hellohello hellohellohello", "ell") == -1);
     }
 }
