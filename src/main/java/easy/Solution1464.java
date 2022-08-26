@@ -6,21 +6,23 @@ package easy;
  */
 public class Solution1464 {
     public int maxProduct(int[] nums) {
-        int max1 = nums[0];
-        int max2 = nums[1];
-        if(max2 > max1){
-            int t = max1;
-            max1 = max2;
-            max2 = t;
+        int first;
+        int second;
+        if(nums[0] <= nums[1]){
+            first = nums[1];
+            second = nums[0];
+        }else{
+            first = nums[0];
+            second = nums[1];
         }
         for(int i = 2;i < nums.length;i++){
-            if(nums[i] >= max1){
-                max2 = max1;
-                max1 = nums[i];
-            }else if(nums[i] > max2){
-                max2 = nums[i];
+            if(nums[i] >= first){
+                second = first;
+                first = nums[i];
+            }else if(nums[i] > second){
+                second = nums[i];
             }
         }
-        return (max1 - 1) * (max2 - 1);
+        return (first - 1) * (second - 1);
     }
 }
