@@ -6,15 +6,16 @@ package easy;
  */
 public class Solution1475 {
     public int[] finalPrices(int[] prices) {
-        for(int i = 0,j;i < prices.length;i++){
-            for(j = i + 1;j < prices.length;j++){
-                if(prices[i] >= prices[j]){
-                    prices[i] -= prices[j];
-                    break;
-                }
+        int [] result = new int[prices.length];
+        int [] stack = new int[prices.length + 1];
+        int top = 0;
+        for(int i = prices.length - 1;i >= 0;i--){
+            while(top > 0 && stack[top] > prices[i]){
+                top--;
             }
-
+            result[i] = prices[i] - stack[top];
+            stack[++top] = prices[i];
         }
-        return prices;
+        return result;
     }
 }
