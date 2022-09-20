@@ -46,7 +46,7 @@ public class Parser {
             if (c == ',') {
                 result[index++] = n;
                 n = 0;
-            } else {
+            } else if(c != ' '){
                 n = n * 10 + c - 48;
             }
         }
