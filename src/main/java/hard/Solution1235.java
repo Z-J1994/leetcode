@@ -3,40 +3,31 @@ package hard;
 import utils.Parser;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Comparator;
 
 public class Solution1235 {
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-
-        int [][] group = new int[startTime.length][3];
-        for(int i = 0;i < startTime.length;i++){
+        int[][] group = new int[startTime.length][3];
+        for (int i = 0; i < startTime.length; i++) {
             group[i][0] = startTime[i];
             group[i][1] = endTime[i];
             group[i][2] = profit[i];
         }
-        Arrays.sort(group,(a, b) ->{
-            if(a[1] != b[1]){
-                return a[1] - b[1];
-            }
-            return a[0] - b[0];
-        });
-
-        Map<Integer,Integer> dp = new HashMap<>();
-        dp.put(group[0][1],group[0][2]);
-        for(int i = 1;i < startTime.length;i++){
-            for(int j = i - 1;j >= 0;j--){
-                if(group[j][1] <= group[i][0]){
-                    group[i][0] = group[j][1];
+        Arrays.sort(group, Comparator.comparingInt(a -> a[1]));
+        int[] dp = new int[startTime.length];
+        dp[0] = group[0][2];
+        for (int i = 1, t; i < startTime.length; i++) {
+            t = 0;
+            for (int j = i - 1; j >= 0; j--) {
+                if (group[j][1] <= group[i][0]) {
+                    t = dp[j];
                     break;
                 }
             }
-            dp.put(group[i][1],Math.max(dp.getOrDefault(group[i][0],0) + group[i][2],dp.get(group[i - 1][1])));
-
+            dp[i] = Math.max(t + group[i][2], dp[i - 1]);
         }
-        return dp.get(group[group.length - 1][1]);
+        return dp[endTime.length - 1];
     }
-
 
     public static void main(String[] args) {
         Solution1235 s = new Solution1235();
