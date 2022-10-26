@@ -41,16 +41,20 @@ public class Parser {
         int[] result = new int[l + 1];
         int index = 0;
         int n = 0;
+        int sign = 1;
         for (int i = 1; i < lastIndex; i++) {
             char c = s.charAt(i);
-            if (c == ',') {
-                result[index++] = n;
+            if (c == '-') {
+                sign = -1;
+            } else if (c == ',') {
+                result[index++] = n * sign;
                 n = 0;
-            } else if(c != ' '){
+                sign = 1;
+            } else if (c != ' ') {
                 n = n * 10 + c - 48;
             }
         }
-        result[index] = n;
+        result[index] = n * sign;
         return result;
     }
 
