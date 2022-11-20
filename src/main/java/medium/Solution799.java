@@ -8,8 +8,7 @@ public class Solution799 {
         while(row < query_row){
             c = new double[p.length + 1];
             for(int i = 0;i < p.length;i++){
-                if(p[i] > 1){
-                    p[i] -= 1;
+                if(--p[i] > 0){
                     c[i] += p[i] / 2;
                     c[i + 1] = p[i] / 2;
                 }
