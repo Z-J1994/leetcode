@@ -12,7 +12,7 @@ public class Solution878 {
             b = t;
         }
         long lo = a,hi = (long) b * n,t;
-        int lcm = lcm(a,b);
+        int lcm = lcm(b,a);
         while(lo <= hi){
             long mid = (lo + hi) >>> 1;
             t = mid / a + mid / b - mid / lcm;
