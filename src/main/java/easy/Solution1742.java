@@ -10,8 +10,7 @@ public class Solution1742 {
         for (int i = highLimit; i > 0; i /= 10, c++) ;
         int[] map = new int[(c + 1) * 10];
         while (lowLimit <= highLimit) {
-            int t = bitSum(lowLimit);
-            for (int j = lowLimit % 10; j < 10 && lowLimit <= highLimit; j++, lowLimit++) {
+            for (int j = lowLimit % 10,t = bitSum(lowLimit); j < 10 && lowLimit <= highLimit; j++, lowLimit++) {
                 map[t++]++;
             }
         }
