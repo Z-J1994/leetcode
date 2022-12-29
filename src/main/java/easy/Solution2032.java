@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution2032 {
-    class Solution {
+
         public List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
             int [] map = new int[101];
             for (int j : nums1) {
@@ -24,5 +24,5 @@ public class Solution2032 {
             }
             return result;
         }
-    }
+
 }
