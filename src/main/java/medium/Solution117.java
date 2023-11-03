@@ -1,20 +1,22 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
+import tree.ITreeNode;
+import utils.TreeUtil;
 
 /**
  * @author zhangjun
  * @version 2020/09/28  22:48
  */
 public class Solution117 {
-    private class Node {
+
+    private static class Node {
         public int val;
         public Node left;
         public Node right;
         public Node next;
 
-        public Node() {}
+        public Node() {
+        }
 
         public Node(int _val) {
             val = _val;
@@ -26,32 +28,44 @@ public class Solution117 {
             right = _right;
             next = _next;
         }
+
     }
-    private Node [] list;
-    private int length = 0;
+
+
     public Node connect(Node root) {
-        getLength(root,1);
-        list = new Node[length];
-        recursion(root,0);
+        if (root == null) {
+            return null;
+        }
+        Node previousLevel = root;
+        while (previousLevel != null && previousLevel.left == null && previousLevel.right == null) {
+            previousLevel = previousLevel.next;
+        }
+        if (previousLevel == null) {
+            return root;
+        }
+        Node validRoot = previousLevel;
+        Node currentLevel = validRoot.left == null ? validRoot.right : validRoot.left;
+        while (previousLevel != null) {
+            if (previousLevel.left != null) {
+                currentLevel.next = previousLevel.left;
+                currentLevel = previousLevel.left;
+            }
+            if (previousLevel.right != null) {
+                currentLevel.next = previousLevel.right;
+                currentLevel = previousLevel.right;
+            }
+            previousLevel = previousLevel.next;
+        }
+        currentLevel.next = null;
+        connect(validRoot.left == null ? validRoot.right : validRoot.left);
         return root;
     }
 
-    private void getLength(Node root,int depth){
-        if(root != null){
-            if (depth > length){
-                length = depth;
-            }
-            getLength(root.right,depth + 1);
-            getLength(root.left,depth + 1);
-        }
-    }
+    public static void main(String[] args) {
+        Solution117 s = new Solution117();
+        Node n = TreeUtil.from(new Integer[]{1, 2, 3, 4, 5, null, 7}, (Node::new));
+        s.connect(n);
+        int t = 5;
 
-    private void recursion(Node root,int depth){
-        if(root != null){
-            recursion(root.right,depth + 1);
-            root.next = list[depth];
-            list[depth] = root;
-            recursion(root.left,depth + 1);
-        }
     }
 }
