@@ -2,31 +2,28 @@ package medium;
 
 public class Solution318 {
     public int maxProduct(String[] words) {
-        int result = 0;
+        int [] map = new int [words.length];
         for(int i = 0;i < words.length;i++){
-            boolean [] marked = new boolean[26];
-            populate(marked,words[i]);
+            String word = words[i];
+            int t = 0;
+            for(int j = 0;j < word.length();j++){
+                t |= 1 << (word.charAt(j) - 'a');
+            }
+            map[i] = t;
+        }
+        int max = 0;
+        for(int i = 0;i < words.length;i++){
             for(int j = i + 1;j < words.length;j++){
-                if(check(marked,words[j]) && words[j].length() * words[i].length() > result){
-                    result = words[j].length() * words[i].length();
+                if((map[i] & map[j]) == 0){
+                    max = Math.max(words[j].length() * words[i].length(),max);
                 }
             }
         }
-        return result;
+        return max;
     }
 
-    private boolean check(boolean [] marked,String s){
-        for(int i = 0;i < s.length();i++){
-            if(marked[s.charAt(i) - 97]){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void populate(boolean [] marked,String s){
-        for(int i = 0;i < s.length();i++){
-            marked[s.charAt(i) - 97] = true;
-        }
+    public static void main(String[] args) {
+        Solution318 s = new Solution318();
+        System.out.println(s.maxProduct(new String[]{"abcw", "baz", "foo", "bar", "xtfn", "abcdef"}));
     }
 }
