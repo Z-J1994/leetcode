@@ -1,55 +1,49 @@
 package hard;
 
+import utils.Parser;
+
 import java.util.Arrays;
 
 public class Solution689 {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
-        int[] differences = new int[nums.length + 1];
-        for (int i = 1; i < differences.length; i++) {
-            differences[i] = differences[i - 1] + nums[i - 1];
+        int s1 = 0, s2 = 0, s3 = 0;
+        int kk = k << 1;
+        for (int i = 0; i < k; i++) {
+            s1 += nums[i];
+            s2 += nums[k + i];
+            s3 += nums[kk + i];
         }
-        for (int i = differences.length - 1; i >= k; i--) {
-            differences[i] -= differences[i - k];
-        }
-
-        int[] stack = new int[differences.length];
-        for (int i = 1; i < differences.length; i++) {
-            if (differences[i] > differences[stack[i - 1]]) {
-                stack[i] = i;
-            } else {
-                stack[i] = stack[i - 1];
+        int max1 = s1,max2 = max1 + s2,max3 = max2 + s3, a = 0, b = 0,c=k;
+        int [] result = {0,k,kk};
+        for (int i = k,j = i + k ,l = i + kk ; l < nums.length; i++,j++,l++) {
+            s1 += nums[i] - nums[i - k];
+            s2 += nums[j] - nums[i];
+            s3 += nums[l] - nums[j];
+            if(s1 > max1){
+                a = i - k + 1;
+                max1 = s1;
+            }
+            if(max1 + s2 > max2){
+                b = a;
+                c = j - k + 1;
+                max2 = max1 + s2;
+            }
+            if(max2 + s3 > max3){
+                result[0] = b;
+                result[1] = c;
+                result[2] = l - k + 1;
+                max3 = max2 + s3;
             }
         }
-
-        int[] stack2 = new int[differences.length];
-        stack2[k] = k;
-        for (int i = k + 1; i < stack.length; i++) {
-            if (differences[i] + differences[stack[i - k]] > differences[stack2[i - 1]] + differences[stack[stack2[i - 1] - k]]) {
-                stack2[i] = i;
-            } else {
-                stack2[i] = stack2[i - 1];
-            }
-        }
-        int a = 0, b = 0, c = 0;
-        int max = 0;
-        for (int i = 2 * k, t; i < differences.length; i++) {
-            int l = stack[stack2[i - k] - k];
-            if ((t = differences[i] + differences[stack2[i - k]] + differences[l]) > max) {
-                max = t;
-                a = l;
-                b = stack2[i - k];
-                c = i;
-            }
-        }
-        return new int[]{a - k, b - k, c - k};
+        return result;
     }
-
 
     public static void main(String[] args) {
         Solution689 s = new Solution689();
-//        int [] a = {1,2,1,2,6,7,5,1};
-        int[] a = {1, 2, 1, 2, 1, 2, 1, 2, 1};
 
-        System.out.println(Arrays.toString(s.maxSumOfThreeSubarrays(a, 2)));
+//        System.out.println(Arrays.toString(s.maxSumOfThreeSubarrays(Parser.StringToIntArray("[1,2,1,2,6,7,5,1]"), 2)));
+//        System.out.println(Arrays.toString(s.maxSumOfThreeSubarrays(Parser.StringToIntArray("[1, 2, 1, 2, 1, 2, 1, 2, 1]"), 2)));
+//        System.out.println(Arrays.toString(s.maxSumOfThreeSubarrays(Parser.StringToIntArray("[1,2,1,2,2,2,2,2]"), 2)));
+        System.out.println(Arrays.toString(s.maxSumOfThreeSubarrays(Parser.StringToIntArray("[1,2,1,2,2,2,2,2]"), 1)));
     }
 }
