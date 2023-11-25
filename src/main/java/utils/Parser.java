@@ -58,4 +58,34 @@ public class Parser {
         return result;
     }
 
+    public static Integer[] StringToIntegerArray(String s) {
+        int l = 0;
+        int lastIndex = s.length() - 1;
+        for (int i = 1; i < lastIndex; i++) {
+            if (s.charAt(i) == ',') {
+                l++;
+            }
+        }
+        Integer[] result = new Integer[l + 1];
+        int index = 0;
+        int n = 0;
+        int sign = 1;
+        for (int i = 1; i < lastIndex; i++) {
+            char c = s.charAt(i);
+            if (c == '-') {
+                sign = -1;
+            } else if (c == ',') {
+                result[index++] = n * sign;
+                n = 0;
+                sign = 1;
+            } else if (c == 'n') {
+                i += 4;
+                result[index++] = null;
+            } else if (c != ' ') {
+                n = n * 10 + c - 48;
+            }
+        }
+        result[index] = n * sign;
+        return result;
+    }
 }
