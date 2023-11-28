@@ -16,6 +16,7 @@ public class Invoker {
         Map<String, Method> methodMap = Arrays.stream(target.getDeclaredMethods()).collect(Collectors.toMap(Method::getName, m -> m));
         Constructor<?> constructor = target.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
+        int i = 0;
         try {
             Object instance;
             Class<?> enclosingClass = target.getEnclosingClass();
@@ -27,7 +28,7 @@ public class Invoker {
             } else {
                 instance = constructor.newInstance();
             }
-            for (int i = 1; i < methodNames.length; i++) {
+            for (i = 1; i < methodNames.length; i++) {
                 Method method = methodMap.get(methodNames[i]);
                 method.setAccessible(true);
                 if (method.getReturnType() == Void.TYPE) {
@@ -37,7 +38,7 @@ public class Invoker {
                 results[i] = (T) invoke(instance,method, args[i]);
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("exception occur when i = " + i,e);
         }
         return results;
     }
