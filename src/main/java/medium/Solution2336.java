@@ -19,11 +19,11 @@ public class Solution2336 {
 
         private int left = 1;
 
-        private Set<Integer> set;
+        private final boolean [] map;
 
         public SmallestInfiniteSet() {
             heap = new int[16];
-            set = new HashSet<>();
+            map = new boolean[1001];
         }
 
         public int popSmallest() {
@@ -64,7 +64,7 @@ public class Solution2336 {
             int min = heap[0];
             heap[0] = heap[--size];
             sink(0);
-            set.remove(min);
+            map[min] = false;
             return min;
         }
 
@@ -73,9 +73,10 @@ public class Solution2336 {
             if (num >= left) {
                 return;
             }
-            if (!set.add(num)) {
+            if (map[num]) {
                 return;
             }
+            map[num] = true;
             if (size == heap.length) {
                 heap = Arrays.copyOf(heap, heap.length << 1);
             }
