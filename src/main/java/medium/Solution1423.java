@@ -6,19 +6,19 @@ package medium;
  */
 public class Solution1423 {
     public int maxScore(int[] cardPoints, int k) {
-        int maxLeft = 0;
+        int sum = 0;
         for(int i = 0;i < k;i++){
-            maxLeft += cardPoints[i];
+            sum += cardPoints[i];
         }
-        int length = cardPoints.length;
-        if(k == length){
-            return maxLeft;
+        if(k-- == cardPoints.length){
+            return sum;
         }
-        int max = maxLeft;
-        int l = length - k;
-        for(int i = length - 1;i >= l;i--){
-            maxLeft += cardPoints[i] - cardPoints[--k];
-            max = (maxLeft > max) ? maxLeft : max;
+        int max = sum;
+        for(int i = 0,l = cardPoints.length - 1;i <= k;i++){
+            sum = sum - cardPoints[k - i] + cardPoints[l - i];
+            if(sum > max){
+                max = sum;
+            }
         }
         return max;
     }
