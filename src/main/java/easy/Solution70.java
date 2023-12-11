@@ -2,7 +2,7 @@ package easy;
 
 public class Solution70 {
     public int climbStairs(int n) {
-        int c = 1;
+        int c = 0;
         for(int i = 1,a = 0,b = 1;i <= n;i++){
             c = a + b;
             a = b;
