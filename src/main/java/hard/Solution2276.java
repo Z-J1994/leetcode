@@ -10,7 +10,7 @@ public class Solution2276 {
 
     class CountIntervals {
 
-        private final TreeMap<Integer, int[]> map;
+        private final TreeMap<Integer, Integer> map;
 
         private int count;
 
@@ -20,33 +20,35 @@ public class Solution2276 {
         }
 
         public void add(int left, int right) {
-            Map.Entry<Integer, int[]> floorEntry = map.floorEntry(left);
-            int[] value;
+            Map.Entry<Integer, Integer> floorEntry = map.floorEntry(left);
+            int l, r;
             if (floorEntry != null) {
-                value = floorEntry.getValue();
-                if (value[1] == left) {
-                    count -= value[1] - value[0] + 1;
-                    left = value[0];
-                    map.remove(value[1]);
+                l = floorEntry.getValue();
+                r = floorEntry.getKey();
+                if (r == left) {
+                    count -= r - l + 1;
+                    left = l;
+                    map.remove(r);
                 }
             }
-            Map.Entry<Integer, int[]> ceilingEntry;
+            Map.Entry<Integer, Integer> ceilingEntry;
             while ((ceilingEntry = map.ceilingEntry(left)) != null) {
-                value = ceilingEntry.getValue();
-                if (value[0] > right) {
+                l = ceilingEntry.getValue();
+                r = ceilingEntry.getKey();
+                if (l > right) {
                     break;
                 }
-                count -= value[1] - value[0] + 1;
-                map.remove(value[1]);
-                if (value[1] > right) {
-                    right = value[1];
+                count -= r - l + 1;
+                map.remove(r);
+                if (r > right) {
+                    right = r;
                 }
-                if (value[0] < left) {
-                    left = value[0];
+                if (l < left) {
+                    left = l;
                 }
             }
             count += right - left + 1;
-            map.put(right, new int[]{left, right});
+            map.put(right, left);
         }
 
         public int count() {
