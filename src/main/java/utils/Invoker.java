@@ -1,5 +1,6 @@
 package utils;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -45,7 +46,17 @@ public class Invoker {
 
     private static Object invoke(Object instance, Method method, Object args) throws Exception{
         if(method.getParameterCount() > 0){
-            return method.invoke(instance,  args);
+            if(args.getClass().isArray()){
+                int length = Array.getLength(args);
+                Object [] arrayArgs = new Object[length];
+                for(int i = 0;i < length;i++){
+                    arrayArgs[i] = Array.get(args,i);
+                }
+                return method.invoke(instance,  arrayArgs);
+            }else{
+                return method.invoke(instance,  args);
+            }
+
         }
         return method.invoke(instance);
     }
