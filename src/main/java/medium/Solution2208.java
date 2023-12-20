@@ -8,14 +8,15 @@ import utils.Parser;
  */
 public class Solution2208 {
 
-    private int[] heap;
+    private long[] heap;
 
     public int halveArray(int[] nums) {
-        heap = nums;
+        heap = new long[nums.length];
         long sum = 0;
         for (int i = 0; i < nums.length; i++) {
-            nums[i] <<= 20;
-            sum += nums[i];
+            long l = (long) nums[i] << 20;
+            heap[i] = l;
+            sum += l;
         }
         for (int i = nums.length / 2; i >= 0; i--) {
             heapIFY(i);
@@ -23,7 +24,7 @@ public class Solution2208 {
         long half = sum >>> 1;
         int i = 0;
         while (sum > half) {
-            int h = heap[0] / 2;
+            long h = heap[0] / 2;
             sum -= h;
             heap[0] = h;
             sink(0);
@@ -42,7 +43,7 @@ public class Solution2208 {
             max = child;
         }
         if (max != parent) {
-            int t = heap[max];
+            long t = heap[max];
             heap[max] = heap[parent];
             heap[parent] = t;
             heapIFY(max);
@@ -50,7 +51,7 @@ public class Solution2208 {
     }
 
     private void sink(int parent) {
-        int value = heap[parent];
+        long value = heap[parent];
         int child;
         while ((child = (parent << 1) + 1) < heap.length) {
             if (child + 1 < heap.length && heap[child] < heap[child + 1]) {
@@ -64,6 +65,7 @@ public class Solution2208 {
         }
         heap[parent] = value;
     }
+
     public static void main(String[] args) {
         Solution2208 s = new Solution2208();
         System.out.println(s.halveArray(Parser.StringToIntArray("[6,58,10,84,35,8,22,64,1,78,86,71,77]")) == 9);
