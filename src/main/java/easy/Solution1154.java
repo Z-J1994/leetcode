@@ -6,34 +6,32 @@ package easy;
  */
 public class Solution1154 {
     public int dayOfYear(String date) {
-        int year = 0;
-        for (int i = 0;i < 4;i++){
-            year = year * 10 + (date.charAt(i) - '0');
-        }
-        int month = date.charAt(5) - '0';
-        month = month * 10 + date.charAt(6) - '0';
-        int day = date.charAt(8) - '0';
-        day = day * 10 + date.charAt(9) - '0';
-
-        int t = 0;
-        if(((year & 3) == 0 && (year % 100) != 0) || (year % 400) == 0){
-            t = 1;
-        }
-        int answer = 0;
+        char [] d = date.toCharArray();
+        int year = getInt(d,0,4);
+        int month = getInt(d,5,7);
+        int days = getInt(d,8,10);
         switch(month){
-            case 12: answer += 30;
-            case 11: answer += 31;
-            case 10: answer += 30;
-            case 9: answer += 31;
-            case 8: answer += 31;
-            case 7: answer += 30;
-            case 6: answer += 31;
-            case 5: answer += 30;
-            case 4: answer += 31;
-            case 3: answer += (28 + t);
-            case 2: answer += 31;
+            case 12: days += 30;
+            case 11: days += 31;
+            case 10: days += 30;
+            case 9: days += 31;
+            case 8: days += 31;
+            case 7: days += 30;
+            case 6: days += 31;
+            case 5: days += 30;
+            case 4: days += 31;
+            case 3: days += ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) ? 29 : 28;
+            case 2: days += 31;
         }
-        answer += day;
-        return answer;
+        return days;
+    }
+
+    public int getInt(char [] date,int start,int end){
+        int i = 0;
+        while(start < end){
+            i = i * 10 + (date[start] - '0');
+            start++;
+        }
+        return i;
     }
 }
