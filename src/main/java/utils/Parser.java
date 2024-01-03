@@ -1,5 +1,7 @@
 package utils;
 
+import list.ListNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,5 +89,29 @@ public class Parser {
         }
         result[index] = n * sign;
         return result;
+    }
+
+    public static ListNode toList(String s) {
+        int n = 0, sign = 1;
+        Integer v = null;
+        ListNode listNode = new ListNode();
+        ListNode p = listNode;
+        for (int i = 1, length = s.length() - 1; i < length; i++) {
+            char c = s.charAt(i);
+            if (c == '-') {
+                sign = -1;
+            } else if (c == ',') {
+                v = n * sign;
+                ListNode l = new ListNode(v);
+                p.next = l;
+                p = l;
+                n = 0;
+                sign = 1;
+            }  else if (c != ' ') {
+                n = n * 10 + c - 48;
+            }
+        }
+        p.next = new ListNode(n * sign);
+        return listNode.next;
     }
 }
