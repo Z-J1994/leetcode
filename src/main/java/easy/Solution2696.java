@@ -6,40 +6,35 @@ package easy;
  */
 public class Solution2696 {
     public int minLength(String s) {
-        char[] chars = s.toCharArray();
-        int[] stack = new int[chars.length];
-
-        for (int j = 1,index = 0; j < chars.length; j++) {
-            if (chars[j] == 'B') {
-                if (index >= 0 && chars[stack[index]] == 'A') {
-                    chars[stack[index]] = 0;
-                    chars[j] = 0;
+        char[] chars = new char[s.length()];
+        int index = -1;
+        for (int j = 0; j < chars.length; j++) {
+            char c = s.charAt(j);
+            if (index < 0) {
+                chars[++index] = c;
+            } else if (c == 'B') {
+                if (chars[index] == 'A') {
                     index--;
+                }else{
+                    chars[++index] = c;
                 }
-            } else if (chars[j] == 'D') {
-                if (index >= 0 && chars[stack[index]] == 'C') {
-                    chars[stack[index]] = 0;
-                    chars[j] = 0;
+            } else if (c == 'D'){
+                if (chars[index] == 'C') {
                     index--;
+                }else{
+                    chars[++index] = c;
                 }
-            }
-
-            if (chars[j] != 0) {
-                stack[++index] = j;
+            }else {
+                chars[++index] = c;
             }
         }
-
-        int c = 0;
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != 0) {
-                c++;
-            }
-        }
-        return c;
+        return index + 1;
     }
+
 
     public static void main(String[] args) {
         Solution2696 s = new Solution2696();
-        System.out.println(s.minLength("ABFCACDB"));
+        System.out.println(s.minLength("ABFCACDB") == 2);
+        System.out.println(s.minLength("ACBBD") == 5);
     }
 }
