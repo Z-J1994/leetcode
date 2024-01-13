@@ -27,10 +27,8 @@ public class Solution2182 {
                     if (p < 'a') {
                         break;
                     }
-                    if (alphabet[p] > 0) {
-                        chars[index++] = (char) p;
-                        --alphabet[p];
-                    }
+                    chars[index++] = (char) p;
+                    --alphabet[p];
                 } else {
                     for (int k = 0; k < c; k++) {
                         chars[index++] = ch;
