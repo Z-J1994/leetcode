@@ -8,20 +8,18 @@ import list.ListNode;
  */
 public class Solution82 {
     public ListNode deleteDuplicates(ListNode head) {
-        head = new ListNode(-101, head);
-        ListNode current = head;
-        while (current.next != null) {
-            ListNode n = current.next.next;
-            int value = current.next.val;
-            while (n != null && value == n.val) {
-                n = n.next;
-            }
-            if (current.next.next != n) {
-                current.next = n;
+        ListNode f = new ListNode(-101, head);
+        ListNode p = f;
+        while (p.next != null && p.next.next != null) {
+            int v = p.next.val;
+            if (v == p.next.next.val) {
+                ListNode n;
+                for (n = p.next.next.next; n != null && n.val == v; n = n.next) ;
+                p.next = n;
             } else {
-                current = current.next;
+                p = p.next;
             }
         }
-        return head.next;
+        return f.next;
     }
 }
