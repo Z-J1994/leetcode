@@ -1,6 +1,8 @@
 package hard;
 
 import tree.TreeNode;
+import utils.Parser;
+import utils.TreeUtil;
 
 import java.util.*;
 
@@ -9,62 +11,61 @@ import java.util.*;
  * @version 2021/7/31
  */
 public class Solution987 {
-    private static class Node{
-        private TreeNode treeNode;
-        private int row;
-        private int column;
-
-        public Node(TreeNode treeNode, int row, int column) {
-            this.treeNode = treeNode;
-            this.row = row;
-            this.column = column;
-        }
-    }
-
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        Deque<Node> queue = new LinkedList<>();
-        Map<Integer,List<Node>> map = new HashMap<>();
-        queue.offer(new Node(root,0,0));
-        int min = 0;
-        int max = 0;
+        Queue<Holder> queue = new ArrayDeque<>();
+        Holder p  = new Holder(0,0,root);
+
+        Map<Integer,List<Holder>> map = new TreeMap<>();
+        queue.offer(p);
         while(!queue.isEmpty()){
-            Node n = queue.removeFirst();
-            List<Node> list = map.get(n.column);
+            Holder h = queue.poll();
+            List<Holder> list = map.get(h.column);
             if(list == null){
-                list = new ArrayList<>();
-                map.put(n.column,list);
+                map.put(h.column,list = new ArrayList<>());
             }
-            if(n.column < min){
-                min = n.column;
-            } else if(n.column > max){
-                max = n.column;
+            int i = list.size();
+            while(i > 0 && (p = list.get(i - 1)).level == h.level && p.node.val > h.node.val){
+                i--;
             }
-            int index = list.size();
-            for(int i = list.size() - 1;i >= 0;i--){
-                Node t = list.get(i);
-                if(n.row <= t.row && n.treeNode.val < t.treeNode.val){
-                    index = i;
-                }else{
-                    break;
-                }
+            list.add(i,h);
+            if(h.node.left != null){
+                queue.offer(new Holder(h.column - 1,h.level + 1,h.node.left));
             }
-            list.add(index,n);
-            if(n.treeNode.left != null) {
-                queue.offer(new Node(n.treeNode.left,n.row + 1,n.column - 1));
-            }
-            if(n.treeNode.right != null) {
-                queue.offer(new Node(n.treeNode.right,n.row + 1,n.column + 1));
+            if(h.node.right != null){
+                queue.offer(new Holder(h.column + 1,h.level + 1,h.node.right));
             }
         }
         List<List<Integer>> result = new ArrayList<>(map.size());
-        for(int i = min;i <= max;i++){
-            List<Node> nodes = map.get(i);
-            List<Integer> t = new ArrayList<>(nodes.size());
-            for(Node node : nodes){
-                t.add(node.treeNode.val);
+        for(Map.Entry<Integer,List<Holder>> entry : map.entrySet()){
+            List<Integer> l = new ArrayList<>();
+            for(Holder h : entry.getValue()){
+                l.add(h.node.val);
             }
-            result.add(t);
+            result.add(l);
         }
         return result;
+    }
+
+
+    private static class Holder{
+
+        private int column;
+
+        private int level;
+
+        private TreeNode node;
+
+        public Holder(int column,int level,TreeNode node){
+            this.column = column;
+            this.node = node;
+            this.level = level;
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution987 s = new Solution987();
+        System.out.println(s.verticalTraversal(TreeUtil.from(Parser.StringToIntegerArray("[3,9,20,null,null,15,7]"))));
+        System.out.println(s.verticalTraversal(TreeUtil.from(Parser.StringToIntegerArray("[0,1,2,4,5,9,3,11,null,null,10,15,null,6,18,14,null,null,21,null,null,7,12,null,null,22,null,null,24,13,8,null,17,null,null,null,null,null,null,16,19,null,null,null,null,23,20]"))));
+        System.out.println(s.verticalTraversal(TreeUtil.from(Parser.StringToIntegerArray("[0,2,1,3,null,5,22,9,4,12,25,null,null,13,14,8,6,null,null,null,null,null,27,24,26,null,17,7,null,28,null,null,null,null,null,19,null,11,10,null,null,null,23,16,15,20,18,null,null,null,null,null,21,null,null,29]"))));
     }
 }
