@@ -8,44 +8,38 @@ import list.ListNode;
  */
 public class Solution143 {
     public void reorderList(ListNode head) {
-        if (head == null) {
-            return;
-        }
-
-        ListNode slow = head;
-        ListNode fast = head;
-
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
+        ListNode fast = head,slow = head;
+        while(fast != null && fast.next != null){
             fast = fast.next.next;
+            slow = slow.next;
         }
-        ListNode t = slow;
-
-        slow = t.next;
-        t.next = null;
-        fast = head;
-
-        ListNode p = null;
-
-        while (slow != null) {
-            ListNode nextTemp = slow.next;
-            slow.next = p;
-            p = slow;
-            slow = nextTemp;
+        slow = reverse(slow);
+        ListNode nh = head,sn;
+        while(slow != null){
+            sn = slow.next;
+            slow.next = nh.next;
+            nh.next = slow;
+            nh = slow.next;
+            slow = sn;
         }
-        slow = p;
-
-
-        while (fast != null && slow != null) {
-            p = fast.next;
-            t = slow.next;
-
-            fast.next = slow;
-            fast = p;
-
-            slow.next = fast;
-            slow = t;
-        }
+        nh.next = null;
     }
 
+    private ListNode reverse(ListNode head){
+        ListNode p = null;
+        for(ListNode next;head != null;){
+            next = head.next;
+            head.next = p;
+            p = head;
+            head = next;
+        }
+        return p;
+    }
+
+    public static void main(String[] args) {
+        Solution143 s = new Solution143();
+        ListNode l;
+        l = new ListNode(1,new ListNode(2,new ListNode(3,new ListNode(4,new ListNode(5)))));
+        s.reorderList(l);
+    }
 }
