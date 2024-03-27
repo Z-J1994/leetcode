@@ -2,24 +2,17 @@ package medium;
 
 public class Solution713 {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        if(k <= 1){
-            return 0;
-        }
-        int product = nums[0];
         int count = 0;
-        int left = 0, right = 1;
-        while (right < nums.length) {
-            if (product < k) {
-                count += right - left;
-                product *= nums[right++];
-            } else{
-                product /= nums[left++];
+        if(k <= 1){
+            return count;
+        }
+        for(int i = 0,j = 0,sum = 1;j < nums.length;j++){
+            sum *= nums[j];
+            while(sum >= k){
+                sum /= nums[i++];
             }
+            count += (j - i + 1);
         }
-        while(product >= k && left < right){
-            product /= nums[left++];
-        }
-        count += right - left;
         return count;
     }
 }
