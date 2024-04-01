@@ -6,16 +6,14 @@ package easy;
  */
 public class Solution58 {
     public int lengthOfLastWord(String s) {
-        int count = 0;
-        for(int i = s.length() - 1;i >= 0;i--){
-            if(s.charAt(i) == ' '){
-                if(count != 0){
-                    break;
-                }
-            }else{
-                count++;
-            }
+        int l = s.length();
+        //There must be at least one word in s.
+        while(s.charAt(--l) == ' ');
+        int length = 0;
+        while(l >= 0 && s.charAt(l) != ' '){
+            ++length;
+            --l;
         }
-        return count;
+        return length;
     }
 }
