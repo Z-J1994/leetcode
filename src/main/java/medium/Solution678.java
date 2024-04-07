@@ -7,16 +7,15 @@ package medium;
 public class Solution678 {
     public boolean checkValidString(String s) {
         int length = s.length();
-        char [][] stack = new char [length][2];
+        byte [] stack = new byte [length];
         int top = -1;
-        char general = 0;
+        byte general = 0;
         for(int i = 0;i < length;i++){
             char c = s.charAt(i);
             if(c == '*'){
                 general++;
             }else if(c == '('){
-                stack[++top][0] = c;
-                stack[top][1] = general;
+                stack[++top] = general;
             }else{
                 if(top >= 0){
                     top--;
@@ -29,12 +28,11 @@ public class Solution678 {
         }
 
         for(int i = top;i >= 0;i--){
-            if(general - (stack[i][1])  <= 0){
+            if(general <= stack[i]){
                 return false;
             }
             general--;
         }
-
         return true;
     }
 }
