@@ -6,20 +6,24 @@ package easy;
  */
 public class Solution1700 {
     public int countStudents(int[] students, int[] sandwiches) {
-        int c = students.length;
-        for(int i = 0,j = 0,t;i < sandwiches.length;i++,c--){
-            if(sandwiches[i] != students[j]){
-                for(t = (j + 1) % students.length; t != j && sandwiches[i] != students[t];t = (t + 1)% students.length);
-                if(t == j){
-                    break;
+        for(int i = 0,j = -1,pl = students.length,l = 0;i < sandwiches.length;i++){
+            while(students[++j] != sandwiches[i]){
+                students[l++] = students[j];
+                if(j + 1 == pl){
+                    if(l == pl){
+                        return l;
+                    }
+                    j = -1;
+                    pl = l;
+                    l = 0;
                 }
-                students[t] = -1;
-                j = (t + 1) % students.length;
-            }else{
-                students[j] = -1;
-                j = (j + 1) % students.length;
+            }
+            if(j + 1 == pl){
+                j = -1;
+                pl = l;
+                l = 0;
             }
         }
-        return c;
+        return 0;
     }
 }
