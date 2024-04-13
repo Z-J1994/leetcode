@@ -1,5 +1,4 @@
 package hard;
-import java.util.Arrays;
 
 /**
  * @author zhangjun
@@ -7,78 +6,59 @@ import java.util.Arrays;
  */
 public class Solution85 {
     public int maximalRectangle(char[][] matrix) {
-
-        int column = matrix.length;
-        if(column == 0){
-            return 0;
-        }
-        int row = matrix[0].length;
-        int [] height = new int[row];
-        int [] start = new int[row];
-        int [] end = new int[row];
-
-        for(int i = 0;i < row;i++){
-            end[i] = row;
-        }
-
-        int maxArea = 0;
-        for(int i = 0;i < column;i++){
-
-            for(int j = 0;j < row;j++){
-                if(matrix[i][j] == '1'){
-                    ++height[j];
-                }else{
-                    height[j] = 0;
+        int rows = matrix.length, columns = matrix[0].length, max = 0;
+        int[] oneLine = new int[columns];
+        int[][] d = new int[columns + 1][2];
+        d[0][0] = -1;
+        for (int i = 0, top; i < rows; i++) {
+            top = 0;
+            for (int j = 0, t, c; j < columns; j++) {
+                c = (matrix[i][j] - '0');
+                t = (c * oneLine[j] + c);
+                oneLine[j] = t;
+                if (d[top][0] >= t) {
+                    while (d[top][0] >= t) {
+                        max = Math.max(max, (j - d[top][1]) * d[top][0]);
+                        --top;
+                    }
+                    d[++top][0] = t;
+                    max = Math.max(max, (j - d[top][1]) * t);
+                } else {
+                    d[++top][0] = t;
+                    d[top][1] = j;
                 }
             }
-            int c = 0;
-            for(int j = 0;j < row;j++){
-                if(matrix[i][j] =='1'){
-                    int t = start[j];
-                    start[j] = (t > c) ? t : c;
-                }else{
-                    c = j + 1;
-                    start[j] = 0;
-                }
-            }
-            c = row;
-            for(int j = row - 1;j >= 0;j--){
-                if(matrix[i][j] =='1'){
-                    int t = end[j];
-                    end[j] = (t < c) ? t : c;
-                }else{
-                    c = j;
-                    end[j] = row;
-                }
-            }
-            System.out.println(Arrays.toString(height));
-            for(int j = 0;j < row;j++){
-                int t = height[j] * (end[j] - start[j]);
-                maxArea = (maxArea > t) ? maxArea : t;
+            while (top > 0) {
+                max = Math.max(max, (columns - d[top][1]) * d[top][0]);
+                --top;
             }
         }
-
-        return maxArea;
+        return max;
     }
 
     public static void main(String[] args) {
         Solution85 s = new Solution85();
-        char [][] m = {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}};
-        char [][] m1 = {};
-        char [][] m2 = {{'0'}};
-        char [][] m3 = {{'1'}};
-        char [][] m4 = {{'0','0'}};
-        char [][] m5 = {{'0','0','1'},{'1','1','1'}};
-        char [][] m6 = {{'0','0','0','0','0','0','1'},{'0','0','0','0','1','1','1'},{'1','1','1','1','1','1','1'},{'0','0','0','1','1','1','1'}};
-        char [][] m7 = {{'0','1','1','0','1'},{'1','1','0','1','0'},{'0','1','1','1','0'},{'1','1','1','1','0'},{'1','1','1','1','1'},{'0','0','0','0','0'}};
-        System.out.println(s.maximalRectangle(m));//6
-        System.out.println(s.maximalRectangle(m1));//0
-        System.out.println(s.maximalRectangle(m2));//0
-        System.out.println(s.maximalRectangle(m3));//1
-        System.out.println(s.maximalRectangle(m4));//0
-        System.out.println(s.maximalRectangle(m5));//3
-        System.out.println(s.maximalRectangle(m6));//9
-        System.out.println(s.maximalRectangle(m7));//9
+        char[][] m = {
+                {'1', '0', '1', '0', '0'},
+                {'1', '0', '1', '1', '1'},
+                {'1', '1', '1', '1', '1'},
+                {'1', '0', '0', '1', '0'}};
+        char[][] m2 = {{'0'}};
+        char[][] m3 = {{'1'}};
+        char[][] m4 = {{'0', '0'}};
+        char[][] m5 = {{'0', '0', '1'}, {'1', '1', '1'}};
+        char[][] m6 = {{'0', '0', '0', '0', '0', '0', '1'}, {'0', '0', '0', '0', '1', '1', '1'}, {'1', '1', '1', '1', '1', '1', '1'}, {'0', '0', '0', '1', '1', '1', '1'}};
+        char[][] m7 = {{'0', '1', '1', '0', '1'}, {'1', '1', '0', '1', '0'}, {'0', '1', '1', '1', '0'}, {'1', '1', '1', '1', '0'}, {'1', '1', '1', '1', '1'}, {'0', '0', '0', '0', '0'}};
+        char[][] m8 = {{'1', '1'}};
+        System.out.println(s.maximalRectangle(m) == 6);
+        System.out.println(s.maximalRectangle(m2) == 0);
+        System.out.println(s.maximalRectangle(m3) == 1);
+        System.out.println(s.maximalRectangle(m4) == 0);
+        System.out.println(s.maximalRectangle(m5) == 3);
+        System.out.println(s.maximalRectangle(m6) == 9);
+        System.out.println(s.maximalRectangle(m7) == 9);
+        System.out.println(s.maximalRectangle(m8) == 2);
+
 
     }
 }
