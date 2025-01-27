@@ -9,33 +9,32 @@ import utils.Parser;
 public class Solution42 {
 
     public int trap(int[] height) {
-        int total = 0,maxIndex = 0;
-        for(int fast = 1,slow = 0,v = height[slow];fast < height.length;fast++){
-            if(height[fast] >= v){
-                while(++slow < fast){
-                    total += v - height[slow];
+        int sum = 0;
+        for (int i = 0, j = height.length - 1, k; i < j; ) {
+            int iv = height[i], jv = height[j];
+            if (iv < jv) {
+                while ((k = height[++i]) <= iv) {
+                    sum += iv - k;
                 }
-                v = height[fast];
-            }
-            if(height[fast] > height[maxIndex]){
-                maxIndex = fast;
+            } else if (iv > jv) {
+                while ((k = height[--j]) <= jv) {
+                    sum += jv - k;
+                }
+            } else {
+                while (++i < j && (k = height[i]) <= iv) {
+                    sum += iv - k;
+                }
             }
         }
-
-        for(int fast = height.length - 2,slow = height.length - 1,v = height[slow];fast >= maxIndex;fast--){
-            if(height[fast] > v){
-                while(--slow > fast){
-                    total += v - height[slow];
-                }
-                v = height[fast];
-            }
-        }
-        return total;
+        return sum;
     }
 
     public static void main(String[] args) {
         Solution42 s = new Solution42();
         System.out.println(s.trap(Parser.StringToIntArray("[0,1,0,2,1,0,1,3,2,1,2,1]")) == 6);
         System.out.println(s.trap(Parser.StringToIntArray("[2,0,2]")) == 2);
+        System.out.println(s.trap(Parser.StringToIntArray("[2,1,0,1]")) == 1);
+        System.out.println(s.trap(Parser.StringToIntArray("[0,1,0,2,1]")) == 1);
+        System.out.println(s.trap(Parser.StringToIntArray("[4,2,0,3,2,5]")) == 9);
     }
 }
