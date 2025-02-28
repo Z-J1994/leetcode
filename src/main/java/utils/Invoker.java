@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 public class Invoker {
 
     public static <T> T[] invoke(Class<?> target, Object[] args, T[] results, String[] methodNames) {
+        return invoke(target, new Object[]{}, args, results, methodNames);
+    }
+
+    public static <T> T[] invoke(Class<?> target, Object [] constructorArgs,Object[] args, T[] results, String[] methodNames) {
         Map<String, Method> methodMap = Arrays.stream(target.getDeclaredMethods()).collect(Collectors.toMap(Method::getName, m -> m));
         Constructor<?> constructor = target.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
@@ -25,9 +29,12 @@ public class Invoker {
                 Constructor<?> enclosingClassConstructor = enclosingClass.getDeclaredConstructors()[0];
                 enclosingClassConstructor.setAccessible(true);
                 Object outer = enclosingClassConstructor.newInstance();
-                instance = constructor.newInstance(outer);
+                Object [] constructorArgsWithOuter = new Object[constructorArgs.length + 1];
+                constructorArgsWithOuter[0] = outer;
+                System.arraycopy(constructorArgs,0,constructorArgsWithOuter,1,constructorArgs.length);
+                instance = constructor.newInstance(constructorArgsWithOuter);
             } else {
-                instance = constructor.newInstance();
+                instance = constructor.newInstance(constructorArgs);
             }
             for (i = 1; i < methodNames.length; i++) {
                 Method method = methodMap.get(methodNames[i]);
